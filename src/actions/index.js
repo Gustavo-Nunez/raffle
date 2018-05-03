@@ -16,7 +16,7 @@ export const registerUser = (userInformation) => {
     };
     debugger
     return (dispatch) => {
-        console.log(dispatch)
+        
         return axios.post("https://g6c9baf9xa.execute-api.us-east-1.amazonaws.com/prod/register", body)
         .then((response) =>  {
             console.log(response)
