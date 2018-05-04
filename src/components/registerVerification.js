@@ -92,7 +92,7 @@ class RegisterVerification extends Component {
     this.props.actions.verifyPhoneCode(this.props.userId, this.props.phoneCode)
     .then((response) => {
       let updatedState = {}
-      if(!error)
+      if(!response)
         updatedState = {phoneVerifyError: false, phoneVerifySuccess: true}
       else
         updatedState = {phoneVerifyError:true, phoneVerifySuccess: false}
@@ -105,7 +105,7 @@ class RegisterVerification extends Component {
     this.props.actions.verifyEmailCode(this.props.userId, this.props.emailCode)
     .then((response) => {
         let updatedState = {}
-      if(!error){
+      if(!response){
         updatedState = {emailVerifyError: false, emailVerifySuccess: true}
       }
       else
