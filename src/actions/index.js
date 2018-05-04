@@ -61,11 +61,11 @@ export const verifyPhoneCode = (code) => {
     }
 }
 
-export const updateUser = (email, userId) => {
+export const updateUser = (name, information, userId) => {
     debugger
     return (dispatch) => {
         
-        return axios.put("https://g6c9baf9xa.execute-api.us-east-1.amazonaws.com/prod/register/" + userId, {email})
+        return axios.put("https://g6c9baf9xa.execute-api.us-east-1.amazonaws.com/prod/register/" + userId, {[name]: information})
         .then((response) =>  {
             console.log(response)
             dispatch(changeState(response))

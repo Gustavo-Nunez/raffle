@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {updateUserEmail, updateUserPhone, verifyEmailCode, verifyPhoneCode} from '../actions';
+import {updateUser, verifyEmailCode, verifyPhoneCode} from '../actions';
 import './registerInfromation.css';
 import Input from './input';
 import DropDown from './dropdown';
@@ -75,42 +75,44 @@ class RegisterVerification extends Component {
   }
 
   handlePhoneVerifyCodeButton = (event) => {
-    this.props.actions.updateUser(event.target.value, this.props.userId)
+    this.props.actions.updateUser('phone', event.target.value, this.props.userId)
     .then(() => {
       this.setState({phoneVerify: true})
     });
-    
   }
 
   handleEmailVerifyCodeButton = (event) => {
-    //Send Code to email
-    this.props.actions.updateUserPhone
-    this.setState({emailVerify: true})
+    this.props.actions.updateUser('email', event.target.value, this.props.userId)
+    .then(() => {
+      this.setState({emailVerify: true})
+    });
   }
 
   handlePhoneVerifyButton = (event) => {
-    //send Code to verify
-    const error = true
-    let updatedState = {}
-    if(!error)
-      updatedState = {phoneVerifyError: false, phoneVerifySuccess: true}
-    else
-      updatedState = {phoneVerifyError:true, phoneVerifySuccess: false}
-      
-    this.setState(updatedState)
+    this.props.actions.verifyPhoneCode(this.props.userId, this.props.phoneCode)
+    .then((response) => {
+      let updatedState = {}
+      if(!error)
+        updatedState = {phoneVerifyError: false, phoneVerifySuccess: true}
+      else
+        updatedState = {phoneVerifyError:true, phoneVerifySuccess: false}
+        
+      this.setState(updatedState)
+    });
   }
 
   handleEmailVerifyButton = (event) => {
-    //send Code to verify
-    const error = false;
-    let updatedState = {}
-    if(!error){
-      updatedState = {emailVerifyError: false, emailVerifySuccess: true}
-    }
-    else
-      updatedState = {emailVerifyError:true, emailVerifySuccess: false}
-      
-    this.setState(updatedState)
+    this.props.actions.verifyEmailCode(this.props.userId, this.props.emailCode)
+    .then((response) => {
+        let updatedState = {}
+      if(!error){
+        updatedState = {emailVerifyError: false, emailVerifySuccess: true}
+      }
+      else
+        updatedState = {emailVerifyError:true, emailVerifySuccess: false}
+        
+      this.setState(updatedState)
+    });
   }
 
   handleInputChange = (event) => {
@@ -196,8 +198,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
-      updateUserEmail,
-      updateUserPhone,
+      updateUser,
       verifyEmailCode, 
       verifyPhoneCode
     }, dispatch)
