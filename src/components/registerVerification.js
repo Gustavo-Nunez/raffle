@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {updateUser} from '../actions';
+import {updateUserEmail, updateUserPhone, verifyEmailCode, verifyPhoneCode} from '../actions';
 import './registerInfromation.css';
 import Input from './input';
 import DropDown from './dropdown';
@@ -75,12 +75,16 @@ class RegisterVerification extends Component {
   }
 
   handlePhoneVerifyCodeButton = (event) => {
-    //Send code to phone
-    this.setState({phoneVerify: true})
+    this.props.actions.updateUser(event.target.value, this.props.userId)
+    .then(() => {
+      this.setState({phoneVerify: true})
+    });
+    
   }
 
   handleEmailVerifyCodeButton = (event) => {
     //Send Code to email
+    this.props.actions.updateUserPhone
     this.setState({emailVerify: true})
   }
 
@@ -122,7 +126,7 @@ class RegisterVerification extends Component {
     if((state.emailCode && !state.emailVerifyError) || (state.phoneCode && !state.phoneVerifyError)){
       const registration = this.state
       console.log(registration);
-      this.props.actions.updateUser(this.state);
+      //change site
     }
   }
 
@@ -192,7 +196,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
-      updateUser
+      updateUserEmail,
+      updateUserPhone,
+      verifyEmailCode, 
+      verifyPhoneCode
     }, dispatch)
   };
 }

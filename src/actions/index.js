@@ -35,11 +35,37 @@ function changeState(response, firstName, lastName){
     }
 }
 
-export const updateUser = (userInformation) => {
+export const verifyEmailCode = (userInformation) => {
     debugger
     return (dispatch) => {
         
-        return axios.post("https://g6c9baf9xa.execute-api.us-east-1.amazonaws.com/prod/register")
+        return axios.put("https://g6c9baf9xa.execute-api.us-east-1.amazonaws.com/prod/verify/"+1+"/email")
+        .then((response) =>  {
+            console.log(response)
+            dispatch(changeState(response))
+        })
+        .catch(error => {console.log(error);})
+    }
+}
+
+export const verifyPhoneCode = (code) => {
+    debugger
+    return (dispatch) => {
+        
+        return axios.put("https://g6c9baf9xa.execute-api.us-east-1.amazonaws.com/prod/verify/" + 1 + "/phone")
+        .then((response) =>  {
+            console.log(response)
+            dispatch(changeState(response))
+        })
+        .catch(error => {console.log(error);})
+    }
+}
+
+export const updateUser = (email, userId) => {
+    debugger
+    return (dispatch) => {
+        
+        return axios.put("https://g6c9baf9xa.execute-api.us-east-1.amazonaws.com/prod/register/" + userId, {email})
         .then((response) =>  {
             console.log(response)
             dispatch(changeState(response))
