@@ -34,3 +34,16 @@ function changeState(response, firstName, lastName){
         userId: response.userId
     }
 }
+
+export const updateUser = (userInformation) => {
+    debugger
+    return (dispatch) => {
+        
+        return axios.post("https://g6c9baf9xa.execute-api.us-east-1.amazonaws.com/prod/register")
+        .then((response) =>  {
+            console.log(response)
+            dispatch(changeState(response))
+        })
+        .catch(error => {console.log(error);})
+    }
+}

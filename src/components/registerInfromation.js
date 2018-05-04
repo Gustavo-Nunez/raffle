@@ -63,7 +63,7 @@ const mapStateToProps = state => {
   return state;
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
       registerUser

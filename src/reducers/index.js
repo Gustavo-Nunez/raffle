@@ -1,7 +1,7 @@
 let defaultState = {
     user: {
-        firstName: '',
-        lastName: '',
+        firstName: 'Gus',
+        lastName: 'Nunez',
         userId: 0
     }
 }
